@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Favee スケジュール管理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f472b6 0%, #fbbf24 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="gradient-bg text-white py-6">
+            <div class="container mx-auto px-4">
+                <h1 class="text-3xl font-bold">Favee スケジュール管理</h1>
+                <p class="mt-2 opacity-90">イベント・アップデート・コラボ情報の管理</p>
+            </div>
+        </header>
+
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- イベント追加フォーム -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800">新しいイベントを追加</h2>
+                    <form id="event-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">タイトル</label>
+                            <input type="text" id="title" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" required>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">カテゴリ</label>
+                                <select id="category" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" required>
+                                    <option value="update">📱 アップデート</option>
+                                    <option value="event">🎉 イベント</option>
+                                    <option value="collab">🤝 コラボ</option>
+                                    <option value="maintenance">🔧 メンテナンス</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">ステータス</label>
+                                <select id="status" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" required>
+                                    <option value="upcoming">予定</option>
+                                    <option value="ongoing">開催中</option>
+                                    <option value="completed">終了</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">日付表示</label>
+                                <input type="text" id="date" placeholder="2025年7月15日（火）10:00〜12:00" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">ソート用日付</label>
+                                <input type="date" id="dateSort" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">アイコン</label>
+                            <input type="text" id="icon" placeholder="📱" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">詳細内容（1行ずつ入力）</label>
+                            <textarea id="details" rows="4" placeholder="新しいアバター着せ替えシステム&#10;部屋のカスタマイズ機能強化" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" required></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">注意書き・特記事項</label>
+                            <input type="text" id="note" placeholder="💡 アップデート記念で限定アイテムプレゼント！" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        </div>
+
+                        <div class="flex gap-4">
+                            <button type="submit" class="flex-1 gradient-bg text-white py-2 px-4 rounded-md hover:opacity-90 transition-opacity">
+                                イベントを追加
+                            </button>
+                            <button type="button" id="clear-form" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                                クリア
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- イベント一覧・編集 -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">イベント一覧</h2>
+                        <div class="flex gap-2">
+                            <button id="export-btn" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-sm">
+                                エクスポート
+                            </button>
+                            <button id="import-btn" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors text-sm">
+                                インポート
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="events-list" class="space-y-4 max-h-96 overflow-y-auto">
+                        <!-- イベント一覧がここに表示されます -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- プレビューセクション -->
+            <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">プレビュー</h2>
+                    <a href="schedule.html" target="_blank" class="px-4 py-2 gradient-bg text-white rounded-md hover:opacity-90 transition-opacity">
+                        スケジュールページを開く
+                    </a>
+                </div>
+                <p class="text-gray-600">変更は自動的にスケジュールページに反映されます。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- インポート用モーダル -->
+    <div id="import-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-2xl w-full mx-4">
+            <h3 class="text-xl font-bold mb-4">JSONデータをインポート</h3>
+            <textarea id="import-data" rows="10" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="JSONデータをここに貼り付けてください..."></textarea>
+            <div class="flex justify-end gap-4 mt-4">
+                <button id="cancel-import" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                    キャンセル
+                </button>
+                <button id="confirm-import" class="px-4 py-2 gradient-bg text-white rounded-md hover:opacity-90 transition-opacity">
+                    インポート
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/schedule.js"></script>
+    <script>
+        class AdminManager {
+            constructor() {
+                this.currentEditId = null;
+                this.init();
+            }
+
+            async init() {
+                // スケジュールマネージャーの初期化を待つ
+                if (window.scheduleManager) {
+                    this.scheduleManager = window.scheduleManager;
+                } else {
+                    // スケジュールマネージャーが読み込まれるまで待つ
+                    await new Promise(resolve => {
+                        const checkManager = () => {
+                            if (window.scheduleManager) {
+                                this.scheduleManager = window.scheduleManager;
+                                resolve();
+                            } else {
+                                setTimeout(checkManager, 100);
+                            }
+                        };
+                        checkManager();
+                    });
+                }
+
+                this.setupEventListeners();
+                this.renderEventsList();
+            }
+
+            setupEventListeners() {
+                // フォーム送信
+                document.getElementById('event-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleFormSubmit();
+                });
+
+                // フォームクリア
+                document.getElementById('clear-form').addEventListener('click', () => {
+                    this.clearForm();
+                });
+
+                // エクスポート
+                document.getElementById('export-btn').addEventListener('click', () => {
+                    this.exportData();
+                });
+
+                // インポート
+                document.getElementById('import-btn').addEventListener('click', () => {
+                    this.showImportModal();
+                });
+
+                // モーダル関連
+                document.getElementById('cancel-import').addEventListener('click', () => {
+                    this.hideImportModal();
+                });
+
+                document.getElementById('confirm-import').addEventListener('click', () => {
+                    this.handleImport();
+                });
+            }
+
+            handleFormSubmit() {
+                const formData = this.getFormData();
+                
+                if (this.currentEditId) {
+                    // 編集モード
+                    this.scheduleManager.updateEvent(this.currentEditId, formData);
+                    this.currentEditId = null;
+                } else {
+                    // 新規追加モード
+                    this.scheduleManager.addEvent(formData);
+                }
+
+                this.clearForm();
+                this.renderEventsList();
+                this.saveToFile();
+            }
+
+            getFormData() {
+                const categoryConfig = {
+                    update: { iconBg: 'bg-blue-500', noteBg: 'bg-blue-50', noteColor: 'text-blue-800' },
+                    event: { iconBg: 'bg-red-500', noteBg: 'bg-red-50', noteColor: 'text-red-800' },
+                    collab: { iconBg: 'bg-green-500', noteBg: 'bg-green-50', noteColor: 'text-green-800' },
+                    maintenance: { iconBg: 'bg-yellow-500', noteBg: 'bg-yellow-50', noteColor: 'text-yellow-800' }
+                };
+
+                const category = document.getElementById('category').value;
+                const config = categoryConfig[category];
+                const details = document.getElementById('details').value.split('\n').filter(line => line.trim());
+
+                return {
+                    title: document.getElementById('title').value,
+                    category: category,
+                    status: document.getElementById('status').value,
+                    date: document.getElementById('date').value,
+                    dateSort: document.getElementById('dateSort').value,
+                    icon: document.getElementById('icon').value,
+                    iconBg: config.iconBg,
+                    description: category === 'maintenance' ? 'メンテナンス内容：' : 
+                                category === 'collab' ? 'コラボ内容：' : 
+                                category === 'event' ? 'イベント内容：' : '新機能・改善点：',
+                    details: details,
+                    note: document.getElementById('note').value || null,
+                    noteBg: config.noteBg,
+                    noteColor: config.noteColor
+                };
+            }
+
+            clearForm() {
+                document.getElementById('event-form').reset();
+                this.currentEditId = null;
+                document.querySelector('button[type="submit"]').textContent = 'イベントを追加';
+            }
+
+            renderEventsList() {
+                const container = document.getElementById('events-list');
+                const events = this.scheduleManager.events;
+
+                container.innerHTML = events.map(event => `
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-gray-800">${event.title}</h3>
+                                <p class="text-sm text-gray-600">${event.date}</p>
+                                <div class="flex gap-2 mt-2">
+                                    <span class="text-xs px-2 py-1 bg-gray-100 rounded">${event.category}</span>
+                                    <span class="text-xs px-2 py-1 bg-gray-100 rounded">${event.status}</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="adminManager.editEvent(${event.id})" class="text-blue-500 hover:text-blue-700 text-sm">
+                                    編集
+                                </button>
+                                <button onclick="adminManager.deleteEvent(${event.id})" class="text-red-500 hover:text-red-700 text-sm">
+                                    削除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            editEvent(id) {
+                const event = this.scheduleManager.events.find(e => e.id === id);
+                if (!event) return;
+
+                // フォームに値を設定
+                document.getElementById('title').value = event.title;
+                document.getElementById('category').value = event.category;
+                document.getElementById('status').value = event.status;
+                document.getElementById('date').value = event.date;
+                document.getElementById('dateSort').value = event.dateSort;
+                document.getElementById('icon').value = event.icon;
+                document.getElementById('details').value = event.details.join('\n');
+                document.getElementById('note').value = event.note || '';
+
+                this.currentEditId = id;
+                document.querySelector('button[type="submit"]').textContent = 'イベントを更新';
+            }
+
+            deleteEvent(id) {
+                if (confirm('このイベントを削除しますか？')) {
+                    this.scheduleManager.deleteEvent(id);
+                    this.renderEventsList();
+                    this.saveToFile();
+                }
+            }
+
+            exportData() {
+                const data = this.scheduleManager.exportEvents();
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'events.json';
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+
+            showImportModal() {
+                document.getElementById('import-modal').classList.remove('hidden');
+                document.getElementById('import-modal').classList.add('flex');
+            }
+
+            hideImportModal() {
+                document.getElementById('import-modal').classList.add('hidden');
+                document.getElementById('import-modal').classList.remove('flex');
+                document.getElementById('import-data').value = '';
+            }
+
+            async handleImport() {
+                const data = document.getElementById('import-data').value;
+                if (await this.scheduleManager.importEvents(data)) {
+                    this.renderEventsList();
+                    this.saveToFile();
+                    this.hideImportModal();
+                    alert('インポートが完了しました！');
+                } else {
+                    alert('インポートに失敗しました。JSONデータを確認してください。');
+                }
+            }
+
+            async saveToFile() {
+                // 実際のファイル保存は手動で行う必要があります
+                console.log('イベントデータが更新されました。assets/data/events.json を手動で更新してください。');
+                console.log(this.scheduleManager.exportEvents());
+            }
+        }
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', () => {
+            window.adminManager = new AdminManager();
+        });
+    </script>
+</body>
+</html>

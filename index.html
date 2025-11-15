@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favee - ポケットの中で推し活をしよう！</title>
+    <meta name="description" content="Faveeで新しい『推し活』体験を手に入れよう">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #f472b6, #fbbf24);
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .coming-soon-avatar {
+            animation: pulse 2s infinite;
+        }
+        
+        /* IPカード回転アニメーション */
+        .ip-card {
+            perspective: 1000px;
+            width: 100%;
+            height: 300px;
+        }
+        
+        .ip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            animation: flipCard 6s infinite;
+        }
+        
+        .ip-card-front, .ip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .ip-card-back {
+            transform: rotateY(180deg);
+        }
+        
+        .ip-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        @keyframes flipCard {
+            0%, 45% {
+                transform: rotateY(0deg);
+            }
+            50%, 95% {
+                transform: rotateY(180deg);
+            }
+            100% {
+                transform: rotateY(0deg);
+            }
+        }
+        
+        /* 各IPカードに異なる遅延を設定 */
+        .ip-card:nth-child(4n+1) .ip-card-inner {
+            animation-delay: 0s;
+        }
+        .ip-card:nth-child(4n+2) .ip-card-inner {
+            animation-delay: 1.5s;
+        }
+        .ip-card:nth-child(4n+3) .ip-card-inner {
+            animation-delay: 3s;
+        }
+        .ip-card:nth-child(4n+4) .ip-card-inner {
+            animation-delay: 4.5s;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 bg-purple-600 text-white p-2 z-50">メインコンテンツにスキップ</a>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-40 bg-black/90 border-b border-gray-800" aria-label="メインナビゲーション">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-between items-center py-3">
+                <div class="flex items-center gap-8">
+                    <a href="/favee" class="flex items-center gap-2" aria-label="Faveeホームページ">
+                        <img src="assets/images/logo.png" class="h-[30px]" alt="Favee">
+                    </a>
+                    <nav class="hidden md:flex items-center gap-6" aria-label="メインメニュー">
+                        <a href="schedule.html" class="text-sm text-gray-300 hover:text-white">スケジュール</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-4">
+                    <!-- Language switcher -->
+                    <div class="hidden md:flex items-center gap-2">
+                        <span class="text-sm px-2 py-1 rounded bg-white text-black">日本語</span>
+                        <span class="text-gray-500">|</span>
+                        <a href="en.html" class="text-sm text-gray-300 hover:text-white px-2 py-1 rounded">English</a>
+                    </div>
+                    <a href="https://lin.ee/Xs1tmLM" class="hidden md:block">
+                        <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" class="h-6 md:h-10">
+                    </a>
+                    <!-- <button class="text-white border-gray-700 text-sm hidden md:inline-flex px-4 py-2 rounded border transition duration-300" aria-label="コンテンツ管理">
+                        コンテンツ管理
+                    </button> -->
+                    <button class="md:hidden text-white" aria-label="メニューを開く" id="mobile-menu-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden hidden bg-black/90 fixed w-full z-30" id="mobile-menu">
+        <div class="px-2 pt-16 pb-3 space-y-1">
+            <a href="index.html" class="block px-3 py-2 text-base font-medium text-white bg-gray-700 rounded-md">ホーム</a>
+            <a href="schedule.html" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-700 rounded-md">スケジュール</a>
+            <div class="px-3 py-2">
+                <span class="text-sm text-white">日本語</span>
+                <span class="text-gray-500 mx-2">|</span>
+                <a href="index-en.html" class="text-sm text-gray-300 hover:text-white">English</a>
+            </div>
+        </div>
+    </div>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="relative min-h-screen overflow-hidden">
+            <!-- <div class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200"></div> -->
+            <!-- <div class="absolute inset-0 opacity-30 bg-[url('/images/hero-pattern.svg')] bg-cover"></div> -->
+            <div class="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 pt-24 md:pt-16">
+                <h1 class="text-xl md:text-3xl font-extrabold mb-8 tracking-tight">
+                    <span class="block gradient-text mb-4">
+                        ポケットの中で<br class="md:hidden mb-6" />推し活をしよう！
+                    </span>
+                    <img src="assets/images/favee_ja.png" class="h-[60px] md:h-[140px] m-auto" alt="Favee">
+                </h1>
+                <p class="text-sm md:text-xl mb-12 max-w-2xl">
+                    推しのデジタルグッズを「集める・飾る・見せる」<br />
+                    スマホひとつで”推し活”を楽しもう！<br />
+                    まずは無料でダウンロード
+                </p>
+                <div class="flex flex-row gap-1 md:gap-4 items-center justify-center">
+                    <a href="https://apps.apple.com/app/id6744030315" id="app-store-btn-1" class="app-store-btn">
+                        <img src="assets/images/app-store.png" alt="App Store" class="h-8 md:h-12 md:mr-2">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.xrsion.favee" id="google-play-btn-1" class="google-play-btn">
+                        <img src="assets/images/google-play.png" alt="Google Play" class="h-8 md:h-12 md:mr-2">
+                    </a>
+                    <a href="https://lin.ee/Xs1tmLM">
+                        <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" class="h-8 md:h-12 md:mr-2">
+                    </a>
+                </div>
+                <div class="w-full text-center z-10 mt-10">
+                    <p class="text-base md:text-lg font-semibold mb-2">
+                        2025年7月4日プレリリース完了！
+                    </p>
+                    <p class="text-xl md:text-2xl font-semibold mb-2">
+                        2025年9月1日正式リリース！
+                    </p>
+                    <p class="text-xs md:text-xl">
+                        9月30日までのダウンロードで<br class="sm:hidden"/>10,000ポイントプレゼント！
+                    </p>
+                    <p class="text-xs md:text-sm text-orange-400 mt-5">
+                        <span class="block text-xs text-black">↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑</span>
+                        アプリ内のデジタルアイテム・家具の購入に使える！
+                    </p>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- IP Section -->
+       <section class="py-20 bg-gray-50 relative">
+           <!-- 上部の装飾的な区切り -->
+           <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-400 via-purple-400 to-orange-400"></div>
+            <div class="container mx-auto px-4">
+                <p class="text-center mb-4 font-bold">Faveeだけのデジタルグッズを手に入れてお部屋を着飾ろう</p>
+                <h2 class="text-2xl md:text-5xl font-bold text-center mb-12">豪華初回コラボ、ついに登場！</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                    <div class="text-center">
+                        <div class="ip-card mb-4">
+                            <div class="ip-card-inner">
+                                <div class="ip-card-front">
+                                    <img src="assets/images/ips/nanakoshibasaki_A.jpg" alt="柴崎七虹 A面">
+                                </div>
+                                <div class="ip-card-back">
+                                    <img src="assets/images/ips/nanakoshibasaki_B.jpg" alt="柴崎七虹 B面">
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-4 mb-2">柴崎七虹<span class="block text-xs">(NANAKO SHIBASAKI)</span></h3>
+                        <p class="text-gray-600 text-xs">
+                            今インドネシアで大人気の日本人TikToker・女優<br />
+                            180万人をこえるSNSフォロワーを通じて<br />
+                            日本とインドネシアの魅力を双方向に発信している
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div class="ip-card mb-4">
+                            <div class="ip-card-inner">
+                                <div class="ip-card-front">
+                                    <img src="assets/images/ips/rirakkuma_A.png" alt="リラックマ A面">
+                                </div>
+                                <div class="ip-card-back">
+                                    <img src="assets/images/ips/rirakkuma_B.png" alt="リラックマ B面">
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-4 mb-2">リラックマ</h3>
+                        <p class="text-gray-600 text-xs">
+                            リラックマはOLのカオルさんの家に<br />
+                            いきなり住みついた着ぐるみのクマ<br />
+                            毎日だらだらゴロゴロしています<br />
+                            背中にチャックがありますが、中身は秘密です<br />
+                            いたずら好きなやんちゃなクマの子・コリラックマと<br />
+                            働き者でキレイ好きなキイロイトリと暮らしています
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div class="ip-card mb-4">
+                            <div class="ip-card-inner">
+                                <div class="ip-card-front">
+                                    <img src="assets/images/ips/awesomeboy_A.png" alt="AWESOMEBOY A面">
+                                </div>
+                                <div class="ip-card-back">
+                                    <img src="assets/images/ips/awesomeboy_B.jpg" alt="AWESOMEBOY B面">
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-4 mb-2">AWESOMEBOY</h3>
+                        <p class="text-gray-600 text-xs">
+                            90〜00年代のヴィンテージウェアを独自視点で<br />
+                            セレクトし、さらにパッチワークやアップサイクル<br />
+                            を取り入れたリメイクアイテムも<br />
+                            展開するセレクトショップ<br />
+                            原宿を中心にトレンドに敏感な若者の間で人気
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div class="ip-card mb-4">
+                            <div class="ip-card-inner">
+                                <div class="ip-card-front">
+                                    <img src="assets/images/ips/lil1ster_A.png" alt="Lill one STAR A面">
+                                </div>
+                                <div class="ip-card-back">
+                                    <img src="assets/images/ips/lil1ster_B.png" alt="Lill one STAR B面">
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-4 mb-2">Lill one STAR</h3>
+                        <p class="text-gray-600 text-xs">
+                            全てのアスリートに届くよう機能性・ファッション性<br />
+                            にこだわり抜いたラグジュアリースポーツブランド<br />
+                            プロ野球選手をはじめ多くのアスリートが<br />
+                            機能性に優れたファッションウェア、そして<br />
+                            ジュエリー類を愛用している
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-gray-400 text-white py-12 md:py-20">
+            <div class="text-center">
+                <p class="text-md md:text-2xl mb-8 font-bold">
+                    今後も続々と増えるコラボを<br class="md:hidden" />お見逃しなく！
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                    <a href="https://lin.ee/Xs1tmLM">
+                        <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" class="h-12 mr-2">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white">
+            <div class="mx-auto">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="md:w-5/12 mb-4 md:mb-0 bg-gray-100">
+                        <img src="assets/images/app1.png" alt="新たな『推し活』時代へ" class="w-full max-w-[400px] py-12 mx-auto">
+                    </div>
+                    <div class="md:w-7/12 px-2 md:pl-12">
+                        <h2 class="text-2xl md:text-5xl md:leading-[1.5] text-center md:text-left font-bold mb-6 text-gray-900 leading-relaxed">スマホでグッズを所有する<br />新たな推し活時代へ</h2>
+                        <p class="text-sm md:text-lg text-gray-700 mb-12 text-center md:text-left">
+                            これまでの物所有やNFTとは違い<br />推しのグッズを気軽にいつでもいくつでも購入し、応援できます
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white">
+            <div class="mx-auto">
+                <div class="flex flex-col md:flex-row items-center gap-4">
+                    <div class="md:w-5/12 mb-4 md:mb-0 bg-gray-100 md:order-1">
+                        <img src="assets/images/app2.png" alt="新たな『推し活』時代へ" class="w-full max-w-[400px] py-12 mx-auto">
+                    </div>
+                    <div class="md:w-7/12 px-2 md:pl-12">
+                        <h2 class="text-2xl md:text-5xl md:leading-[1.5] text-center md:text-left font-bold mb-6 text-gray-900 leading-relaxed">飾って楽しむ、私だけの世界を持ち歩こう</h2>
+                        <p class="text-sm md:text-lg text-gray-700 mb-12 text-center md:text-left">
+                            購入したグッズや限定アイテムは<br />
+                            自分だけの部屋に飾っていつでも楽しむことができます
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section class="py-20 bg-gray-400">
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl md:text-4xl font-bold text-center mb-12 text-white">Faveeの主要機能</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        <div class="flex justify-center mb-4">
+                            <img src="assets/images/app1.png" alt="デジタルグッズ購入・着せ替え" class="h-[200px]">
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">キャラメイク・デジタルグッズを購入しよう<br /><span class="text-xs">（基本無料・課金あり）</span></h3>
+                        <div class="mt-6 space-y-4 text-left">
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">キャラクターメイク: キャラに着せ替えできる洋服を購入できます</p>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">デジタルアパレル購入: 『推し』のグッズをいくつでも購入可能</p>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">キャラクター購入: お部屋で同居する「推し」のキャラを購入できます　随時追加予定！</p>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">アニメーション: さまざまな動きをキャラにつけられます　追加予定！</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        <div class="flex justify-center mb-4">
+                            <img src="assets/images/app2.png" alt="デジタルグッズ購入・着せ替え" class="h-[200px]">
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">「推し」の部屋を作って遊ぼう<br /><span class="text-xs">（基本無料・課金あり）</span></h3>
+                        <div class="mt-6 space-y-4 text-left">
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">部屋の着せ替え: 壁紙、床、家具など、 自分好みに部屋をカスタムできます</p>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">「推し」と同居: キャラクターを選択すれば「推し」とシェアハウスできます　随時追加予定！</p>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">親密度を高める: ハートを貯めて親密度を高めることでプレゼントとの交換やランキングに反映されます　追加予定！</p>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">デジタルFaveeくじ: 「推し」とコラボしたデジタルグッズがハズレなしくじで登場します</p>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">SNSにシェア: スマホ内へのダウンロードはもちろんのこと、SNSに直接共有できます</p>
+                            </div>
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">マイルームシェア: ユーザー同士、カスタムした部屋を見せ合うことが可能です　追加予定！</p>
+                            </div>
+                            <!-- <div class="flex items-start">
+                                <svg class="h-5 w-5 text-gray-400 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <p class="text-gray-400 text-xs">マイルームシェア：ユーザー同士、カスタムした部屋を見せ合うことが可能</p>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- <div class="bg-white rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                        <div class="flex justify-center mb-4">
+                            <img src="assets/images/app1.png" alt="デジタルグッズ購入・着せ替え" class="h-[200px]">
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">推し活ランキング</h3>
+                        <div class="mt-6 space-y-4 text-left">
+                            <div class="flex items-start">
+                                <svg class="h-5 w-5 text-purple-500 mt-1 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-gray-700 text-xs">アイテム購入数だけでなく、ログイン時間やなどに応じて限定ギフトや称号（バッジ）が付与される</p>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section -->
+        <!-- <section class="py-20 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Faveeの特徴</h2>
+                <p class="text-xl text-gray-600 text-center mb-12">クリエイターの可能性を広げる多彩な機能</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="relative aspect-video">
+                            <img src="/images/item-creation.jpg" alt="アイテム作成" class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-900">アイテム作成</h3>
+                            <p class="text-gray-700 mb-4">独自のファッションアイテムやアクセサリーをデザインし、世界中のFaveeユーザーに提供しましょう。</p>
+                            <a href="/contents#items" class="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition-all duration-300 transform hover:translate-x-2">
+                                詳細を見る
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="relative aspect-video">
+                            <img src="/images/world-creation.jpg" alt="ワールド作成" class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-900">ワールド作成</h3>
+                            <p class="text-gray-700 mb-4">没入感のある3D空間を構築し、ユーザーに独特な体験を提供しましょう。あなたの想像力が新しい世界を生み出します。</p>
+                            <a href="/contents#worlds" class="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition-all duration-300 transform hover:translate-x-2">
+                                詳細を見る
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="relative aspect-video">
+                            <img src="/images/motion-creation.jpg" alt="モーション作成" class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-900">モーション作成</h3>
+                            <p class="text-gray-700 mb-4">キャラクターに生命を吹き込む、個性的な動きやダンスを制作しましょう。表現の可能性は無限大です。</p>
+                            <a href="/contents#motions" class="inline-flex items-center bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full transition-all duration-300 transform hover:translate-x-2">
+                                詳細を見る
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- Creator Community Section -->
+        <section class="py-20 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-orange-300 to-pink-300"></div>
+            <!-- <div class="absolute inset-0 bg-[url('/images/creator-community-bg.jpg')] bg-cover"></div> -->
+            <div class="container mx-auto px-1 md:px-4 text-center relative z-10">
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl py-8 px-2 md:px-8 max-w-3xl mx-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white mx-auto mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <h2 class="text-2xl md:text-4xl font-bold mb-6 text-white">
+                        Faveeで新たな推し活を<br class="md:hidden" />はじめよう
+                    </h2>
+                    <p class="text-sm md:text-xl mb-8 text-white">
+                        今すぐダウンロードでアプリで使える<br class="md:hidden" />"10,000ポイント"ゲット<br>
+                    </p>
+                    <div class="flex flex-row gap-1 md:gap-4 items-center justify-center">
+                        <a href="https://apps.apple.com/app/id6744030315" id="app-store-btn-1" class="app-store-btn">
+                            <img src="assets/images/app-store.png" alt="App Store" class="h-8 md:h-12 md:mr-2">
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=com.xrsion.favee" id="google-play-btn-1" class="google-play-btn">
+                            <img src="assets/images/google-play.png" alt="Google Play" class="h-8 md:h-12 md:mr-2">
+                        </a>
+                        <a href="https://lin.ee/Xs1tmLM">
+                            <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" class="h-8 md:h-12 md:mr-2">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- App Download Section -->
+        <!-- <section class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="md:w-1/2 mb-8 md:mb-0">
+                        <h2 class="text-3xl font-bold mb-4 text-gray-900">Faveeアプリをダウンロード</h2>
+                        <p class="text-xl mb-6 text-gray-700">
+                            いつでもどこでも、Faveeの世界を楽しもう。<br>
+                            友達と一緒に冒険したり、新しい作品を生み出したりしよう！
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="https://apps.apple.com/app/id6744030315" class="bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-full inline-flex items-center transition duration-300">
+                                <img src="/images/app-store.png" alt="App Store" class="w-6 h-6 mr-2">
+                                App Store
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=com.xrsion.favee" class="bg-black hover:bg-gray-800 text-white px-6 py-3 rounded-full inline-flex items-center transition duration-300">
+                                <img src="/images/google-play.png" alt="Google Play" class="w-6 h-6 mr-2">
+                                Google Play
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="/images/app-preview.png" alt="Favee App Preview" class="rounded-lg shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </section> -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="container mx-auto px-4">
+            <!-- <div class="grid grid-cols-1 md:grid-cols-4 gap-8"> -->
+            <div class="flex justify-between gap-8">
+                <div>
+                    <img src="assets/images/logo.png" alt="Favee" class="h-[30px] mb-4">
+                    <ul class="space-y-2 text-xs md:text-base">
+                        <li><a href="https://xrsion.co.jp/company/" class="text-gray-400 hover:text-white transition duration-300">会社概要</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-white transition duration-300">利用規約</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition duration-300">プライバシーポリシー</a></li>
+                        <li><a href="mailto:favee@xrsion.co.jp" class="text-gray-400 hover:text-white transition duration-300">ユーザーサポート</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm md:text-lg font-semibold mb-4">フォローする</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://x.com/favee_xrsion" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/favee_xrsion" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-xs md:text-base mt-12 text-center text-gray-400">
+                <p>&copy; 2024 xRsion inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // モバイルメニューの切り替え
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // ユーザー数のアニメーション
+        // const userCountElement = document.getElementById('user-count');
+        // const targetCount = 2025;
+        // let currentCount = 2000;
+
+        // function animateCount() {
+        //     if (currentCount < targetCount) {
+        //         currentCount++;
+        //         userCountElement.textContent = currentCount;
+        //         requestAnimationFrame(animateCount);
+        //     }
+        // }
+
+        // Intersection Observerを使用してビューポートに入ったときにアニメーションを開始
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCount();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        observer.observe(userCountElement);
+
+        // デバイス検出とアプリストアボタンの表示制御
+        function detectDeviceAndShowButtons() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const appStoreButtons = document.querySelectorAll('.app-store-btn');
+            const googlePlayButtons = document.querySelectorAll('.google-play-btn');
+            
+            console.log('User Agent:', userAgent); // デバッグ用
+            console.log('App Store buttons found:', appStoreButtons.length);
+            console.log('Google Play buttons found:', googlePlayButtons.length);
+            
+            // iOSデバイスの検出
+            const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+            
+            // Androidデバイスの検出
+            const isAndroid = /android/i.test(userAgent);
+            
+            console.log('Is iOS:', isIOS);
+            console.log('Is Android:', isAndroid);
+            
+            if (isIOS) {
+                // iOSデバイスの場合、App Storeボタンのみ表示
+                appStoreButtons.forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+                googlePlayButtons.forEach(btn => {
+                    btn.style.display = 'none';
+                });
+                console.log('Showing App Store buttons only');
+            } else if (isAndroid) {
+                // Androidデバイスの場合、Google Playボタンのみ表示
+                appStoreButtons.forEach(btn => {
+                    btn.style.display = 'none';
+                });
+                googlePlayButtons.forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+                console.log('Showing Google Play buttons only');
+            } else {
+                // その他のデバイス（PC等）の場合、両方のボタンを表示
+                appStoreButtons.forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+                googlePlayButtons.forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+                console.log('Showing both buttons (PC/Desktop)');
+            }
+        }
+
+        // ページ読み込み完了後に実行
+        window.addEventListener('load', detectDeviceAndShowButtons);
+        
+        // DOMContentLoadedでも実行（フォールバック）
+        document.addEventListener('DOMContentLoaded', detectDeviceAndShowButtons);
+    </script>
+</body>
+</html>

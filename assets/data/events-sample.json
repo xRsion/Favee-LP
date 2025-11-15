@@ -1,0 +1,132 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "title": "Favee v2.1.0 アップデート",
+      "category": "update",
+      "status": "upcoming",
+      "date": "2025年7月15日（火）10:00〜12:00",
+      "dateSort": "2025-07-15",
+      "icon": "📱",
+      "iconBg": "bg-blue-500",
+      "description": "新機能・改善点：",
+      "details": [
+        "新しいアバター着せ替えシステム",
+        "部屋のカスタマイズ機能強化",
+        "パフォーマンス向上とバグ修正",
+        "新しいアニメーション追加"
+      ],
+      "note": "💡 アップデート記念で限定アイテムプレゼント！",
+      "noteBg": "bg-blue-50",
+      "noteColor": "text-blue-800",
+      "badge": "NEW",
+      "badgeBg": "bg-blue-500",
+      "animation": "pulse-animation"
+    },
+    {
+      "id": 2,
+      "title": "夏祭りイベント 2025",
+      "category": "event",
+      "status": "ongoing",
+      "date": "2025年7月1日（月）〜 7月31日（水）",
+      "dateSort": "2025-07-01",
+      "icon": "🎉",
+      "iconBg": "bg-red-500",
+      "description": "イベント内容：",
+      "details": [
+        "浴衣・夏祭り限定アイテム登場",
+        "毎日ログインボーナス2倍",
+        "夏祭りガチャ開催",
+        "特別ミッション追加"
+      ],
+      "note": "🎆 期間限定！夏祭り限定アイテムをゲットしよう！",
+      "noteBg": "bg-red-50",
+      "noteColor": "text-red-800",
+      "badge": "開催中",
+      "badgeBg": "bg-green-500"
+    },
+    {
+      "id": 3,
+      "title": "人気アニメ「○○○」コラボ",
+      "category": "collab",
+      "status": "upcoming",
+      "date": "2025年8月10日（土）〜 8月31日（土）",
+      "dateSort": "2025-08-10",
+      "icon": "🤝",
+      "iconBg": "bg-green-500",
+      "description": "コラボ内容：",
+      "details": [
+        "人気キャラクターのアバター登場",
+        "限定コラボアイテム・家具",
+        "特別ストーリーモード追加",
+        "コラボ記念ガチャ開催"
+      ],
+      "note": "✨ 詳細は近日発表！お楽しみに！",
+      "noteBg": "bg-green-50",
+      "noteColor": "text-green-800",
+      "badge": "SOON",
+      "badgeBg": "bg-purple-500",
+      "animation": "pulse-animation"
+    },
+    {
+      "id": 4,
+      "title": "定期メンテナンス",
+      "category": "maintenance",
+      "status": "upcoming",
+      "date": "2025年7月20日（日）02:00〜06:00",
+      "dateSort": "2025-07-20",
+      "icon": "🔧",
+      "iconBg": "bg-yellow-500",
+      "description": "メンテナンス内容：",
+      "details": [
+        "サーバー安定性向上",
+        "データベース最適化",
+        "セキュリティアップデート",
+        "軽微なバグ修正"
+      ],
+      "note": "⚠️ メンテナンス中はアプリをご利用いただけません",
+      "noteBg": "bg-yellow-50",
+      "noteColor": "text-yellow-800"
+    },
+    {
+      "id": 5,
+      "title": "秋の収穫祭イベント",
+      "category": "event",
+      "status": "upcoming",
+      "date": "2025年9月15日（月）〜 10月15日（水）",
+      "dateSort": "2025-09-15",
+      "icon": "🍂",
+      "iconBg": "bg-orange-500",
+      "description": "予定内容：",
+      "details": [
+        "秋限定アイテム・コスチューム",
+        "ハロウィン特別イベント",
+        "収穫祭ミニゲーム",
+        "限定ガチャ・キャンペーン"
+      ],
+      "note": "🎃 秋の魅力満載のイベントをお楽しみに！",
+      "noteBg": "bg-orange-50",
+      "noteColor": "text-orange-800"
+    },
+    {
+      "id": 6,
+      "title": "冬の特別コラボ企画",
+      "category": "collab",
+      "status": "upcoming",
+      "date": "2025年12月1日（月）〜 12月31日（水）",
+      "dateSort": "2025-12-01",
+      "icon": "❄️",
+      "iconBg": "bg-blue-600",
+      "description": "企画内容（予定）：",
+      "details": [
+        "人気ブランドとのコラボアイテム",
+        "クリスマス・年末年始限定コンテンツ",
+        "特別ログインボーナス",
+        "新年記念イベント"
+      ],
+      "note": "🎄 年末年始を彩る特別なコラボをお楽しみに！",
+      "noteBg": "bg-blue-50",
+      "noteColor": "text-blue-800"
+    }
+  ]
+}
