@@ -1,0 +1,25 @@
+{
+  "id": "rilakkuma",
+  "name": "リラックマ",
+  "nameEn": "Rilakkuma",
+  "description": "リラックマはOLのカオルさんの家にいきなり住みついた着ぐるみのクマ。毎日だらだらゴロゴロしています。背中にチャックがありますが、中身は秘密です。いたずら好きなやんちゃなクマの子・コリラックマと働き者でキレイ好きなキイロイトリと暮らしています。",
+  "thumbnailImage": "/assets/images/collaboration/rilakkuma/rilakkuma-thumbnail.png",
+  "bannerImage": "/assets/images/collaboration/rilakkuma/rilakkuma-banner.png",
+  "items": [
+    {
+      "name": "リラックマ ぬいぐるみ",
+      "image": "/assets/images/ips/items/rilakkuma_item1.png",
+      "description": "お部屋に飾れるリラックマのぬいぐるみ"
+    },
+    {
+      "name": "コリラックマ ぬいぐるみ",
+      "image": "/assets/images/ips/items/rilakkuma_item2.png",
+      "description": "お部屋に飾れるコリラックマのぬいぐるみ"
+    },
+    {
+      "name": "キイロイトリ ぬいぐるみ",
+      "image": "/assets/images/ips/items/rilakkuma_item3.png",
+      "description": "お部屋に飾れるキイロイトリのぬいぐるみ"
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リラックマ × Favee - コラボ特設ページ</title>
+    <meta name="description" content="リラックマ × Faveeコラボレーション。限定デジタルグッズをゲットしよう！">
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #f472b6, #fbbf24);
+        }
+        .item-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .item-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-40 bg-black/90 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-between items-center py-3">
+                <div class="flex items-center gap-8">
+                    <a href="/" class="flex items-center gap-2">
+                        <img src="/assets/images/logo.png" class="h-[30px]" alt="Favee">
+                    </a>
+                    <nav class="hidden md:flex items-center gap-6">
+                        <a href="/schedule" class="text-sm text-gray-300 hover:text-white">スケジュール</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="https://lin.ee/Xs1tmLM" class="hidden md:block">
+                        <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" class="h-6 md:h-10">
+                    </a>
+                    <button class="md:hidden text-white" id="mobile-menu-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden hidden bg-black/90 fixed w-full z-30" id="mobile-menu">
+        <div class="px-2 pt-16 pb-3 space-y-1">
+            <a href="/" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-700 rounded-md">ホーム</a>
+            <a href="/schedule" class="block px-3 py-2 text-base font-medium text-white hover:bg-gray-700 rounded-md">スケジュール</a>
+        </div>
+    </div>
+
+    <main class="pt-16">
+        <!-- Eyecatch Section -->
+        <section class="bg-gradient-to-b from-amber-50 to-white">
+            <div class="max-w-4xl mx-auto px-4 pt-16 md:pt-24 pb-8">
+                <img id="thumbnail" src="" alt="" class="w-full rounded-xl shadow-lg">
+            </div>
+            <div class="max-w-3xl mx-auto px-4 pb-16 md:pb-24 text-center">
+                <p class="text-sm md:text-base text-pink-500 font-bold mb-2">Favee × Collaboration</p>
+                <h1 id="ip-name" class="text-3xl md:text-5xl font-bold mb-4"></h1>
+                <p id="ip-name-en" class="text-lg md:text-xl text-gray-500 mb-6"></p>
+                <p id="ip-description" class="text-sm md:text-lg text-gray-700 leading-relaxed"></p>
+            </div>
+        </section>
+
+        <!-- Items Section -->
+        <section class="py-16 md:py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl md:text-4xl font-bold text-center mb-4">アイテム一覧</h2>
+                <p class="text-center text-gray-500 mb-12">Faveeアプリ内で購入できる限定コラボアイテム</p>
+                <div id="items-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
+                    <!-- Items loaded by JS -->
+                </div>
+                <p id="items-empty" class="text-center text-gray-400 hidden">アイテムは準備中です。お楽しみに！</p>
+            </div>
+        </section>
+
+        <!-- Banner Section -->
+        <section>
+            <img id="banner" src="" alt="" class="w-full">
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 md:py-20 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-orange-300 to-pink-300"></div>
+            <div class="container mx-auto px-4 text-center relative z-10">
+                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl py-8 px-4 md:px-8 max-w-3xl mx-auto">
+                    <h2 class="text-2xl md:text-4xl font-bold mb-4 text-white">Faveeでコラボアイテムを<br class="md:hidden" />手に入れよう</h2>
+                    <p class="text-sm md:text-xl mb-8 text-white">
+                        今すぐダウンロードでアプリで使える<br class="md:hidden" />"3,000ポイント"ゲット
+                    </p>
+                    <div class="flex flex-row gap-1 md:gap-4 items-center justify-center">
+                        <a href="https://apps.apple.com/app/id6744030315" class="app-store-btn">
+                            <img src="/assets/images/app-store.png" alt="App Store" class="h-8 md:h-12">
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=jp.co.xrsion.favee" class="google-play-btn" target="_blank">
+                            <img src="/assets/images/google-play.png" alt="Google Play" class="h-8 md:h-12">
+                        </a>
+                        <a href="https://lin.ee/Xs1tmLM">
+                            <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" class="h-8 md:h-12">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between gap-8">
+                <div>
+                    <img src="/assets/images/logo.png" alt="Favee" class="h-[30px] mb-4">
+                    <ul class="grid grid-cols-2 gap-x-8 gap-y-2 text-xs md:text-base">
+                        <li><a href="https://xrsion.co.jp/company/" class="text-gray-400 hover:text-white transition duration-300">会社概要</a></li>
+                        <li><a href="/trade-law" class="text-gray-400 hover:text-white transition duration-300">特定商取引法に基づく表記</a></li>
+                        <li><a href="/terms" class="text-gray-400 hover:text-white transition duration-300">利用規約</a></li>
+                        <li><a href="/payment-law" class="text-gray-400 hover:text-white transition duration-300">資金決済法に基づく表示</a></li>
+                        <li><a href="/privacy" class="text-gray-400 hover:text-white transition duration-300">プライバシーポリシー</a></li>
+                        <li><a href="/csae" class="text-gray-400 hover:text-white transition duration-300">CSAEポリシー</a></li>
+                        <li><a href="mailto:favee@xrsion.co.jp" class="text-gray-400 hover:text-white transition duration-300">ユーザーサポート</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm md:text-lg font-semibold mb-4">フォローする</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://x.com/favee_xrsion" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                        </a>
+                        <a href="https://www.instagram.com/favee_xrsion" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-xs md:text-base mt-12 text-center text-gray-400">
+                <p>&copy; 2026 xRsion inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Load IP data from JSON
+        async function loadIPData() {
+            try {
+                const res = await fetch('/assets/data/ips/rilakkuma.json');
+                const data = await res.json();
+
+                document.getElementById('ip-name').textContent = data.name;
+                document.getElementById('ip-name-en').textContent = data.nameEn;
+                document.getElementById('ip-description').textContent = data.description;
+                document.getElementById('thumbnail').src = data.thumbnailImage;
+                document.getElementById('thumbnail').alt = data.name;
+                document.getElementById('banner').src = data.bannerImage;
+                document.getElementById('banner').alt = data.name + ' バナー';
+
+                document.title = data.name + ' × Favee - コラボ特設ページ';
+
+                const grid = document.getElementById('items-grid');
+                const emptyMsg = document.getElementById('items-empty');
+
+                if (data.items && data.items.length > 0) {
+                    data.items.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = 'item-card bg-white rounded-xl overflow-hidden shadow-md';
+                        card.innerHTML = `
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center">
+                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span class=\\'text-gray-300 text-4xl\\'>🎁</span>'">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="font-semibold text-sm md:text-base mb-1">${item.name}</h3>
+                                <p class="text-xs md:text-sm text-gray-500">${item.description}</p>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                } else {
+                    grid.classList.add('hidden');
+                    emptyMsg.classList.remove('hidden');
+                }
+            } catch (e) {
+                console.error('Failed to load IP data:', e);
+            }
+        }
+
+        loadIPData();
+    </script>
+</body>
+</html>
