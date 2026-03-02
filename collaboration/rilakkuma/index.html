@@ -18,13 +18,6 @@
             color: transparent;
             background-image: linear-gradient(to right, #f472b6, #fbbf24);
         }
-        .item-card {
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .item-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
-        }
     </style>
 </head>
 <body class="bg-white text-gray-900">
@@ -63,59 +56,202 @@
     </div>
 
     <main class="pt-16">
-        <!-- Eyecatch Section -->
+
+        <!-- Eyecatch: Thumbnail -->
         <section class="bg-gradient-to-b from-amber-50 to-white">
             <div class="max-w-4xl mx-auto px-4 pt-16 md:pt-24 pb-8">
-                <img id="thumbnail" src="" alt="" class="w-full rounded-xl shadow-lg">
+                <img src="/assets/images/collaboration/rilakkuma/rilakkuma-thumbnail.png" alt="リラックマ × Favee" class="w-full rounded-xl shadow-lg">
             </div>
-            <div class="max-w-3xl mx-auto px-4 pb-16 md:pb-24 text-center">
-                <p class="text-sm md:text-base text-pink-500 font-bold mb-2">Favee × Collaboration</p>
-                <h1 id="ip-name" class="text-3xl md:text-5xl font-bold mb-4"></h1>
-                <p id="ip-name-en" class="text-lg md:text-xl text-gray-500 mb-6"></p>
-                <p id="ip-description" class="text-sm md:text-lg text-gray-700 leading-relaxed"></p>
-            </div>
-        </section>
-
-        <!-- Items Section -->
-        <section class="py-16 md:py-20 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <h2 class="text-2xl md:text-4xl font-bold text-center mb-4">アイテム一覧</h2>
-                <p class="text-center text-gray-500 mb-12">Faveeアプリ内で購入できる限定コラボアイテム</p>
-                <div id="items-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
-                    <!-- Items loaded by JS -->
-                </div>
-                <p id="items-empty" class="text-center text-gray-400 hidden">アイテムは準備中です。お楽しみに！</p>
+            <div class="max-w-3xl mx-auto px-4 pt-10 pb-16 md:pb-20 text-center">
+                <h1 class="text-2xl md:text-4xl font-bold mb-4 leading-tight">世界中のリラックマファンと<br class="md:hidden"/>繋がろう！</h1>
+                <p class="text-base md:text-xl text-gray-600 font-bold mb-6">「リラックマが大好き」その気持ちに、<br class="md:hidden"/>国境はありません。</p>
+                <p class="text-sm md:text-lg text-gray-700 leading-relaxed">
+                    Favee（フェイビー）は、グッズを集めて理想のお部屋を作ったり、世界中のファンのこだわりのお部屋を覗きにいける場所です。
+                </p>
             </div>
         </section>
 
-        <!-- Banner Section -->
+        <!-- Banner -->
         <section>
-            <img id="banner" src="" alt="" class="w-full">
+            <div class="max-w-4xl mx-auto px-4">
+                <img src="/assets/images/collaboration/rilakkuma/rilakkuma-banner.png" alt="リラックマ × Favee バナー" class="w-full rounded-xl shadow-lg">
+            </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="py-16 md:py-20 relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-orange-300 to-pink-300"></div>
-            <div class="container mx-auto px-4 text-center relative z-10">
-                <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl py-8 px-4 md:px-8 max-w-3xl mx-auto">
-                    <h2 class="text-2xl md:text-4xl font-bold mb-4 text-white">Faveeでコラボアイテムを<br class="md:hidden" />手に入れよう</h2>
-                    <p class="text-sm md:text-xl mb-8 text-white">
-                        今すぐダウンロードでアプリで使える<br class="md:hidden" />"3,000ポイント"ゲット
+        <!-- Detail Section -->
+        <section class="py-16 md:py-20">
+            <div class="max-w-3xl mx-auto px-4 space-y-10">
+                <div>
+                    <h3 class="text-lg md:text-xl font-bold mb-3 flex items-start gap-2">
+                        <span class="text-pink-500 mt-0.5">&#9670;</span>
+                        自慢の「リラックマ部屋」を世界へシェア
+                    </h3>
+                    <p class="text-sm md:text-base text-gray-700 leading-relaxed pl-6">
+                        こだわりのレイアウトが完成したら、自動的に世界175ヶ国のユーザーに公開されます。あなたのセンスに、世界中から「いいね」やリアクションが届きます。
                     </p>
-                    <div class="flex flex-row gap-1 md:gap-4 items-center justify-center">
-                        <a href="https://apps.apple.com/app/id6744030315" class="app-store-btn">
-                            <img src="/assets/images/app-store.png" alt="App Store" class="h-8 md:h-12">
-                        </a>
-                        <a href="https://play.google.com/store/apps/details?id=jp.co.xrsion.favee" class="google-play-btn" target="_blank">
-                            <img src="/assets/images/google-play.png" alt="Google Play" class="h-8 md:h-12">
-                        </a>
-                        <a href="https://lin.ee/Xs1tmLM">
-                            <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" class="h-8 md:h-12">
-                        </a>
+                </div>
+                <div>
+                    <h3 class="text-lg md:text-xl font-bold mb-3 flex items-start gap-2">
+                        <span class="text-pink-500 mt-0.5">&#9670;</span>
+                        みんなのお部屋に遊びにいこう
+                    </h3>
+                    <p class="text-sm md:text-base text-gray-700 leading-relaxed pl-6">
+                        「おすすめ」から世界中のユーザーが作ったお部屋を訪問。自分では思いつかなかった家具の組み合わせや、可愛いアバターの着こなしに刺激を受けるはずです。
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg md:text-xl font-bold mb-3 flex items-start gap-2">
+                        <span class="text-pink-500 mt-0.5">&#9670;</span>
+                        「好き」で繋がる新しいコミュニティ
+                    </h3>
+                    <p class="text-sm md:text-base text-gray-700 leading-relaxed pl-6">
+                        素敵なお部屋を見つけたら、勇気を出してフォロー！ 同じアイテムを愛する仲間同士、言葉を超えた「共感」で繋がることができます。
+                    </p>
+                </div>
+                <p class="text-sm md:text-base text-gray-700 leading-relaxed text-center pt-4">
+                    一人で楽しむのはもちろん、みんなで集まれば「推し活」はもっと楽しくなる。<br />
+                    さあ、スマホの中に広がるリラックマファンの輪へ、あなたも参加してみませんか？
+                </p>
+            </div>
+        </section>
+
+        <!-- Shop Section -->
+        <section class="py-16 md:py-20 bg-amber-50">
+            <div class="max-w-4xl mx-auto px-4 text-center">
+                <h2 class="text-2xl md:text-4xl font-bold mb-6">ショップやくじで<br />リラックマ限定グッズを集めよう！</h2>
+                <p class="text-sm md:text-lg text-gray-700 leading-relaxed mb-10">
+                    アパレル・壁紙・家具・小物の全55点がショップやくじでゲットできます。<br />
+                    その日の気分に合わせてアバターに着せ替えたり、お部屋のレイアウトを楽しみましょう。
+                </p>
+                <div class="grid grid-cols-3 gap-4 md:gap-6">
+                    <div>
+                        <img src="/assets/images/collaboration/rilakkuma/items/item1.png" alt="アパレル" class="w-full rounded-xl shadow-md">
+                        <p class="mt-3 font-bold text-sm md:text-base">アパレル</p>
+                    </div>
+                    <div>
+                        <img src="/assets/images/collaboration/rilakkuma/items/item2.png" alt="家具・小物" class="w-full rounded-xl shadow-md">
+                        <p class="mt-3 font-bold text-sm md:text-base">家具・小物</p>
+                    </div>
+                    <div>
+                        <img src="/assets/images/collaboration/rilakkuma/items/item3.png" alt="壁紙" class="w-full rounded-xl shadow-md">
+                        <p class="mt-3 font-bold text-sm md:text-base">壁紙</p>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Download CTA Section -->
+        <section class="py-16 md:py-20 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-orange-300 to-pink-300"></div>
+            <div class="container mx-auto px-4 text-center relative z-10">
+                <h2 class="text-2xl md:text-4xl font-bold mb-8 text-white">今すぐ「Favee」をダウンロード！</h2>
+                <div class="flex flex-row gap-1 md:gap-4 items-center justify-center">
+                    <a href="https://apps.apple.com/app/id6744030315" class="app-store-btn">
+                        <img src="/assets/images/app-store.png" alt="App Store" class="h-10 md:h-14">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=jp.co.xrsion.favee" class="google-play-btn" target="_blank">
+                        <img src="/assets/images/google-play.png" alt="Google Play" class="h-10 md:h-14">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tutorial Section -->
+        <section class="py-16 md:py-20 bg-gray-50">
+            <div class="max-w-3xl mx-auto px-4 text-center">
+                <h2 class="text-2xl md:text-4xl font-bold mb-4">遊び方はこちら</h2>
+                <p class="text-gray-500 mb-8">チュートリアル動画</p>
+                <video class="w-full max-w-sm mx-auto shadow-lg" controls playsinline>
+                    <source src="/assets/videos/tutorial_ja.mp4" type="video/mp4">
+                    お使いのブラウザは動画の再生に対応していません。
+                </video>
+            </div>
+        </section>
+
+        <!-- What is Digital Goods Section -->
+        <section class="py-16 md:py-20">
+            <div class="max-w-3xl mx-auto px-4">
+                <h2 class="text-2xl md:text-4xl font-bold text-center mb-8">デジタルグッズとは？</h2>
+                <p class="text-sm md:text-base text-gray-700 leading-relaxed mb-10 text-center">
+                    デジタルグッズとは、スマホの中であなたのアバターに着せたり、お部屋に飾ったりできる「デジタル上のコレクション」のことです。お子様から大人まで気軽に楽しんでいただけるグッズとなっています。
+                </p>
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4 bg-amber-50 rounded-xl p-5">
+                        <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold mb-1">何点集めても場所を取らない</h3>
+                            <p class="text-sm text-gray-600">どれだけ集めても、実際のお部屋が狭くなる心配はありません。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 bg-amber-50 rounded-xl p-5">
+                        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold mb-1">汚れない・劣化しない</h3>
+                            <p class="text-sm text-gray-600">いつまでも、きれいなままのグッズをコレクションできます。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 bg-amber-50 rounded-xl p-5">
+                        <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold mb-1">いつでも一緒</h3>
+                            <p class="text-sm text-gray-600">あなたのスマホの中で24時間、いつでもどこでも一緒です。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What is Favee Section -->
+        <section class="py-16 md:py-20 bg-gray-50">
+            <div class="max-w-3xl mx-auto px-4">
+                <h2 class="text-2xl md:text-4xl font-bold text-center mb-8">Faveeとは？</h2>
+                <p class="text-sm md:text-base text-gray-700 leading-relaxed mb-12 text-center">
+                    キャラクター、アニメ、著名人、アスリートなどのコンテンツをデジタルグッズ化し、ファンと繋ぐアプリです。ユーザーはデジタルグッズをスマホ内にコレクションし、自分だけの空間を世界中のユーザーへ発信することで、国境を越えたファン同士の交流を楽しむことができます。今後も新しいコンテンツが続々参加予定！機能も充実させ、皆さまに長く愛していただけるアプリとなります。
+                </p>
+
+                <!-- Sales Overview -->
+                <div class="bg-white rounded-xl shadow-md p-6 md:p-8">
+                    <h3 class="text-xl md:text-2xl font-bold mb-6 text-center">販売概要</h3>
+                    <table class="w-full text-sm md:text-base">
+                        <tbody>
+                            <tr class="border-b border-gray-100">
+                                <th class="text-left py-3 pr-4 text-gray-500 font-semibold whitespace-nowrap align-top">発売日</th>
+                                <td class="py-3">2026年3月1日（日）〜</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <th class="text-left py-3 pr-4 text-gray-500 font-semibold whitespace-nowrap align-top">販売場所</th>
+                                <td class="py-3">スマホアプリ「Favee」内</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <th class="text-left py-3 pr-4 text-gray-500 font-semibold whitespace-nowrap align-top">内容</th>
+                                <td class="py-3">アバター用着せ替えアイテム、お部屋用インテリアアイテム（デジタルグッズ）</td>
+                            </tr>
+                            <tr class="border-b border-gray-100">
+                                <th class="text-left py-3 pr-4 text-gray-500 font-semibold whitespace-nowrap align-top">価格</th>
+                                <td class="py-3">300円（税込）〜 ※アプリ内通貨でのご購入</td>
+                            </tr>
+                            <tr>
+                                <th class="text-left py-3 pr-4 text-gray-500 font-semibold whitespace-nowrap align-top">商品数</th>
+                                <td class="py-3">全55種</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
@@ -153,7 +289,6 @@
     </footer>
 
     <script>
-        // Mobile menu
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
@@ -162,51 +297,6 @@
                 mobileMenu.classList.add('hidden');
             }
         });
-
-        // Load IP data from JSON
-        async function loadIPData() {
-            try {
-                const res = await fetch('/assets/data/ips/rilakkuma.json');
-                const data = await res.json();
-
-                document.getElementById('ip-name').textContent = data.name;
-                document.getElementById('ip-name-en').textContent = data.nameEn;
-                document.getElementById('ip-description').textContent = data.description;
-                document.getElementById('thumbnail').src = data.thumbnailImage;
-                document.getElementById('thumbnail').alt = data.name;
-                document.getElementById('banner').src = data.bannerImage;
-                document.getElementById('banner').alt = data.name + ' バナー';
-
-                document.title = data.name + ' × Favee - コラボ特設ページ';
-
-                const grid = document.getElementById('items-grid');
-                const emptyMsg = document.getElementById('items-empty');
-
-                if (data.items && data.items.length > 0) {
-                    data.items.forEach(item => {
-                        const card = document.createElement('div');
-                        card.className = 'item-card bg-white rounded-xl overflow-hidden shadow-md';
-                        card.innerHTML = `
-                            <div class="aspect-square bg-gray-100 flex items-center justify-center">
-                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span class=\\'text-gray-300 text-4xl\\'>No Image</span>'">
-                            </div>
-                            <div class="p-3 md:p-4">
-                                <h3 class="font-semibold text-sm md:text-base mb-1">${item.name}</h3>
-                                <p class="text-xs md:text-sm text-gray-500">${item.description}</p>
-                            </div>
-                        `;
-                        grid.appendChild(card);
-                    });
-                } else {
-                    grid.classList.add('hidden');
-                    emptyMsg.classList.remove('hidden');
-                }
-            } catch (e) {
-                console.error('Failed to load IP data:', e);
-            }
-        }
-
-        loadIPData();
     </script>
 </body>
 </html>
