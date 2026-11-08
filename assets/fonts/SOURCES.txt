@@ -1,0 +1,7 @@
+zen-kaku-gothic-new-400.ttf https://raw.githubusercontent.com/google/fonts/main/ofl/zenkakugothicnew/ZenKakuGothicNew-Regular.ttf
+zen-kaku-gothic-new-500.ttf https://raw.githubusercontent.com/google/fonts/main/ofl/zenkakugothicnew/ZenKakuGothicNew-Medium.ttf
+zen-kaku-gothic-new-700.ttf https://raw.githubusercontent.com/google/fonts/main/ofl/zenkakugothicnew/ZenKakuGothicNew-Bold.ttf
+manrope-variable.ttf https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/Manrope%5Bwght%5D.ttf
+OFL-ZenKakuGothicNew.txt https://raw.githubusercontent.com/google/fonts/main/ofl/zenkakugothicnew/OFL.txt
+OFL-Manrope.txt https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/OFL.txt
+Downloaded 2026-11-08. SIL Open Font License files included.
